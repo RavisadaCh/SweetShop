@@ -159,7 +159,9 @@ void Player::updateCamera()
 	printf("%d\n", Valuetest);*/
 	//this->test = this->testWhere;
 
-	printf("%d\n", pinPlace);
+	//printf("%d\n", pinPlace);
+
+
 
 	if (this->pinPlace == 1)			//<---chemist
 	{
@@ -220,6 +222,7 @@ void Player::updatePosition(int where)
 {
 	this->pinPlace = where;
 	//this->place = where;
+	float xPosition = this->player.getPosition().x;
 	if (pinPlace == 0)
 	{
 		this->player.setPosition(Vector2f(684.f, 384.f));

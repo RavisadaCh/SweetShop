@@ -15,7 +15,7 @@ class MainPage
 {
 private: //ใช้ได้แค่ในคลาส
 	Player* player;
-	Dialog* text;
+	//Dialog* text;
 	//Player* cam;
 
 	RenderWindow* window;
@@ -35,7 +35,14 @@ private: //ใช้ได้แค่ในคลาส
 	short whereAmI; // update word in enum
 
 	int exchangedPlace;
-	int count;
+	int situation;
+	int i = 0;
+	int j = 0;
+
+	bool X = false;
+	bool C = false;
+	bool firstTalkWithHina = false;
+	bool secondTalkWithKage = false;
 
 	bool outside = true;
 	bool insideChemist = false;
@@ -84,12 +91,48 @@ private: //ใช้ได้แค่ในคลาส
 	RectangleShape kenmaArea;
 	RectangleShape oikawa;
 
+	Text text;
+	Text text2;
+	Font font;
+	//String* op[20];
+	Text empty;
+	Text op1;
+	Text op2;
+	Text op3;
+	Text op4;
+	Text hina1;
+	Text hina2;
+	Text hina3;
+	Text hina4;
+	Text hina5;
+	Text hina6;
+	Text kage1;
+	Text kage2;
+	Text kage3;
+	Text kage4;
+	Text kage4_1;
+	Text kage4_2;
+	Text kage5_1;
+	Text kage5_2;
+	Text kage6;
+	Text kage7;
+	Text kage8;
+	Text kage9;
+	Text kage10;
+	Text kage11;
+
+
 	void initInsideChemist();
 	void initInsideSweetShop();
 	void initInsideGreengrocer();
 	void initInsideFlorist();
 	void initInsideCafe();
 	void initInsideRestaurant();
+
+	void initDialog();
+
+	Clock clock;
+	float testTime;
 
 
 public: //ใช้ได้หมด
@@ -101,12 +144,13 @@ public: //ใช้ได้หมด
 	void updatePollEvent();
 	void updateDoors();
 	void updateCharacter();
+	void updateDialog();
 
 	int exchangeShortToInt(short whereAmI);
 
 
 	void render();
-	void renderPlayer();
+	//void renderPlayer();
 	void renderBG();
 	void renderDialog();
 
