@@ -31,6 +31,19 @@ private: //ใช้ได้แค่ในคลาส
 
 	Music BGsound;
 	void initMusic();
+	
+	short whereAmI; // update word in enum
+
+	int exchangedPlace;
+	int count;
+
+	bool outside = true;
+	bool insideChemist = false;
+	bool insideSweetshop = false;
+	bool insideGreengrocer = false;
+	bool insideFlorist = false;
+	bool insideCafe = false;
+	bool insideRestaurant = false;
 
 	RectangleShape chemistDoor;
 	RectangleShape sweetShopDoor;
@@ -56,14 +69,19 @@ private: //ใช้ได้แค่ในคลาส
 	RectangleShape kitaSan;
 	Texture hina;
 	Sprite hinata;
+	RectangleShape hinataArea;
 	Texture kage;
 	Sprite kageyama;
+	RectangleShape kageyamaArea;
 	Texture suga;
 	Sprite sugawara;
+	RectangleShape sugawaraArea;
 	Texture ushi;
 	Sprite ushijima;
+	RectangleShape ushijimaArea;
 	Texture ken;
 	Sprite kenma;
+	RectangleShape kenmaArea;
 	RectangleShape oikawa;
 
 	void initInsideChemist();
@@ -82,16 +100,17 @@ public: //ใช้ได้หมด
 	void update();
 	void updatePollEvent();
 	void updateDoors();
-	void updateNewBG(short whereAmI);
+	void updateCharacter();
+
+	int exchangeShortToInt(short whereAmI);
 
 
 	void render();
 	void renderPlayer();
 	void renderBG();
 	void renderDialog();
-	void renderNewBG(short whereAmI);
 
-	short whereAmI; // update word in enum
+	
 
 }
 ;

@@ -19,6 +19,7 @@ void MainPage::initBG()
 void MainPage::initPlayer()
 {
 	this->player = new Player();
+	this->player->updatePosition(0);
 }
 
 void MainPage::initMusic()
@@ -58,7 +59,7 @@ void MainPage::initDoors()
 
 void MainPage::initInsideChemist()
 {
-	this->chemist.loadFromFile("Texture/Inside breif.jpg");
+	this->chemist.loadFromFile("Texture/Inside chemist breif.jpg");
 	this->chemistBG.setTexture(this->chemist);
 	this->chemistBG.setPosition(Vector2f(0.f, 768.f));
 
@@ -74,7 +75,7 @@ void MainPage::initInsideChemist()
 
 void MainPage::initInsideSweetShop()
 {
-	this->sweetShop.loadFromFile("Texture/Inside breif.jpg"); 
+	this->sweetShop.loadFromFile("Texture/Inside sweetshop breif.jpg"); 
 	this->sweetShopBG.setTexture(sweetShop);
 	this->sweetShopBG.setPosition(Vector2f(0.f, 1536.f));
 
@@ -83,17 +84,24 @@ void MainPage::initInsideSweetShop()
 	
 	this->hina.loadFromFile("Texture/hinata.png");
 	this->hinata.setTexture(this->hina);
-	this->hinata.setPosition(Vector2f(284.f, 1920.f));
+	this->hinata.setPosition(Vector2f(284.f, 1850.f));
+	this->hinataArea.setSize(Vector2f(429, 375));
+	this->hinataArea.setPosition(Vector2f(184.f, 1850.f));
+	this->hinataArea.setFillColor(Color::Blue);
 
 	this->kage.loadFromFile("Texture/kageyama.png");
 	this->kageyama.setTexture(this->kage);
-	this->kageyama.setPosition(Vector2f(1014.f, 1920.f));
+	this->kageyama.setPosition(Vector2f(1014.f, 1820.f));
+	this->kageyamaArea.setSize(Vector2f(375, 427));
+	this->kageyamaArea.setPosition(Vector2f(914, 1720));
+	this->kageyamaArea.setFillColor(Color::Black);
+
 
 }
 
 void MainPage::initInsideGreengrocer()
 {
-	this->greengrocer.loadFromFile("Texture/Inside breif.jpg");
+	this->greengrocer.loadFromFile("Texture/Inside greengrocer breif.jpg");
 	this->greengrocerBG.setTexture(this->greengrocer);
 	this->greengrocerBG.setPosition(Vector2f(0.f, 2304.f));
 	
@@ -187,8 +195,6 @@ void MainPage::update()
 	this->player->update();
 	this->updateDoors();
 	this->text->update();
-	this->updateNewBG(this->whereAmI);
-	
 }
 
 void MainPage::updatePollEvent()
@@ -205,52 +211,120 @@ void MainPage::updatePollEvent()
 
 void MainPage::updateDoors()
 {
-	this->whereAmI = OUTSIDE;
-
 	if ( Keyboard::isKeyPressed(Keyboard::W)
 		//ขอบเขตที่คลิ๊กได้
 		&& this->sweetShopDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		this->whereAmI = SWEETSHOP;
-		std::cout << "came in sweetShop" << std::endl;
+		this->insideSweetshop = true;
+		this->outside = false;
+		if (this->insideSweetshop)
+		{	
+			this->whereAmI = SWEETSHOP;
+			std::cout << "came in sweetShop" << std::endl;
+			
+			this->exchangeShortToInt(SWEETSHOP);
+		
+			this->player->updatePosition(this->exchangedPlace);
+
+		}
+		
+		//this->player->updatePosition(whereAmI);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) && this->chemistDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		std::cout << "came in chemist" << std::endl;
-		this->whereAmI = CHEMIST;
+		this->outside = false;
+		this->insideChemist = true;
+		if (this->insideChemist)
+		{
+			std::cout << "came in chemist" << std::endl;
+			//this->whereAmI = CHEMIST;
+
+			this->exchangeShortToInt(CHEMIST);
+
+			this->player->updatePosition(this->exchangedPlace);
+		}
 		
+		//this->player->updatePosition(whereAmI);
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::S) && this->greengrocerDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
+	else if (Keyboard::isKeyPressed(Keyboard::W) && this->greengrocerDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		std::cout << "came in greengrocer" << std::endl;
-		this->whereAmI = GREENGROCER;
-		this->updateNewBG(GREENGROCER);
+		this->outside = false;
+		this->insideGreengrocer = true;
+		if (this->insideGreengrocer)
+		{
+			std::cout << "came in greengrocer" << std::endl;
+			this->whereAmI = GREENGROCER;
+
+			this->exchangeShortToInt(GREENGROCER);
+
+			this->player->updatePosition(this->exchangedPlace);
+		}
+		//this->player->updatePosition(whereAmI);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) && this->floristDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		std::cout << "came in florist" << std::endl;
-		this->whereAmI = FLORIST;
-		this->updateNewBG(FLORIST);
+		this->outside = false;
+		this->insideFlorist = true;
+		if (this->insideFlorist)
+		{
+			std::cout << "came in florist" << std::endl;
+			this->whereAmI = FLORIST;
+
+			this->exchangeShortToInt(FLORIST);
+
+			this->player->updatePosition(this->exchangedPlace);
+		}
+		//this->player->updatePosition(whereAmI);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) && this->cafeDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		std::cout << "came in cafe" << std::endl;
-		this->whereAmI = CAFE;
-		this->updateNewBG(CAFE);
+		this->insideCafe = true;
+		if (this->insideCafe)
+		{
+			this->outside = false;
+			std::cout << "came in cafe" << std::endl;
+			this->whereAmI = CAFE;
+
+			this->exchangeShortToInt(CAFE);
+
+			this->player->updatePosition(this->exchangedPlace);
+		}
+		//this->player->updatePosition(whereAmI);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) && this->restaurantDoor.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		std::cout << "came in restaurant" << std::endl;
-		this->whereAmI =RESTAURANT;
-		this->updateNewBG(RESTAURANT);
+		this->insideRestaurant = true;
+		if (this->insideRestaurant)
+		{
+			this->outside = false;
+			std::cout << "came in restaurant" << std::endl;
+			this->whereAmI = RESTAURANT;
+
+			this->exchangeShortToInt(RESTAURANT);
+
+			this->player->updatePosition(this->exchangedPlace);
+		}
+		//this->player->updatePosition(whereAmI);
+	}
+	else if(Keyboard::isKeyPressed(Keyboard::S))
+	{
+		this->insideChemist = false;
+		this->insideSweetshop = false;
+		this->insideGreengrocer = false;
+		this->insideFlorist = false;
+		this->insideCafe = false;
+		this->insideRestaurant = false;
+		this->outside = true;
+
+		this->whereAmI = OUTSIDE;
+		this->exchangeShortToInt(OUTSIDE);
+		this->player->updatePosition(this->exchangedPlace);
 	}
 	
-
 	if (Keyboard::isKeyPressed(Keyboard::P))
 	{
-		this->player->updatePosition(whereAmI);
+		
 		this->renderDialog();
-		//this->text->render(*this->window);
 	}
 
 
@@ -259,55 +333,78 @@ void MainPage::updateDoors()
 	//std::cout << position << std::endl;
 }
 
-void MainPage::updateNewBG(short whereAmI)
+void MainPage::updateCharacter()
 {
-	if (this->whereAmI == CHEMIST)
+	if (this->hinataArea.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		this->window->draw(this->kitaSan);
-		this->window->draw(this->chemistBG);
+		this->count = 1;
+		this->text->updateText(this->count);
+		this->renderDialog();
 	}
-	else if (this->whereAmI == SWEETSHOP)
+	else if (this->kageyamaArea.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
 	{
-		this->window->draw(this->sweetShopBG);
-		this->window->draw(this->hinata);
-		this->window->draw(this->kageyama);
+		this->count = 2;
+		this->text->updateText(this->count);
+		this->renderDialog();
 	}
-	else if (this->whereAmI == GREENGROCER)
+	 
+}
+
+
+int MainPage::exchangeShortToInt(short whereAmI)
+{
+	if (whereAmI == CHEMIST)
 	{
-		this->window->draw(this->greengrocerBG);
-		this->window->draw(this->ushijima);
+		this->exchangedPlace = 1;
 	}
-	else if (this->whereAmI == FLORIST)
+	else if (whereAmI == SWEETSHOP)
 	{
-		this->window->draw(this->floristBG);
-		this->window->draw(this->sugawara);
+		this->exchangedPlace = 2;
 	}
-	else if (this->whereAmI == CAFE)
+	else if (whereAmI == GREENGROCER)
 	{
-		this->window->draw(this->cafeBG);
-		this->window->draw(this->kenma);
+		this->exchangedPlace = 3;
 	}
-	else if (this->whereAmI == RESTAURANT)
+	else if (whereAmI == FLORIST)
 	{
-		this->window->draw(this->restaurantBG);
-		this->window->draw(this->oikawa);
+		this->exchangedPlace = 4;
 	}
+	else if (whereAmI == CAFE)
+	{
+		this->exchangedPlace = 5;
+	}
+	else if (whereAmI == RESTAURANT)
+	{
+		this->exchangedPlace = 6;
+	}
+	else if (whereAmI == OUTSIDE)
+	{
+		this->exchangedPlace = 0;
+	}
+
+	return this->exchangedPlace;
+
 }
 
 
 void MainPage::render()
 {
 	this->window->clear();
-	this->renderBG();
-	this->renderPlayer();
+	
+	
+
 	this->window->draw(this->sweetShopDoor);
 	this->window->draw(this->chemistDoor);
 	this->window->draw(this->greengrocerDoor);
 	this->window->draw(this->floristDoor);
 	this->window->draw(this->cafeDoor);
 	this->window->draw(this->restaurantDoor);
+	
+	this->renderBG();
 
-	this->renderDialog();
+	//this->renderPlayer();
+
+	//this->renderDialog();
 	/*if (this->whereAmI == SWEETSHOP)
 	{
 		
@@ -327,24 +424,63 @@ void MainPage::render()
 	//
 	//omg = &hey; //<-ไปใส่ในเงื่อนไข
 	//this->window->draw(*omg);
-
+	
 	this->window->display();
 }
 
-void MainPage::renderPlayer()
-{
-	this->player->render(*this->window);
-}
+//void MainPage::renderPlayer()
+//{
+//	this->player->render(*this->window);
+//}
 
 void MainPage::renderBG()
 {
-	this->window->draw(this->mainBG);
-	this->window->draw(this->mainBG2);
-
-	if (this->whereAmI == SWEETSHOP)
+	if (this->outside)
 	{
-		this->renderNewBG(SWEETSHOP);
+		this->window->draw(this->mainBG);
+		this->window->draw(this->mainBG2);
+		this->player->render(*this->window);
 	}
+	/*if (this->insideChemist)
+	{
+		this->window->draw(this->chemistBG);
+		this->window->draw(this->kitaSan);	
+		this->player->render(*this->window);
+	}*/
+	if (this->insideSweetshop)
+	{
+		
+		this->window->draw(this->sweetShopBG);
+		this->window->draw(this->hinata);
+		this->window->draw(this->kageyama);
+		this->player->render(*this->window);
+		
+	}
+	if(this->insideGreengrocer)//if (this->whereAmI == GREENGROCER)
+	{
+		this->window->draw(this->greengrocerBG);
+		this->window->draw(this->ushijima);
+		this->player->render(*this->window);
+	}
+	if (this->insideFlorist)//(this->whereAmI == FLORIST)
+	{
+		this->window->draw(this->floristBG);
+		this->window->draw(this->sugawara);
+		this->player->render(*this->window);
+	}
+	if (this->insideCafe)//(this->whereAmI == CAFE)
+	{
+		this->window->draw(this->cafeBG);
+		this->window->draw(this->kenma);
+		this->player->render(*this->window);
+	}
+	if (this->insideRestaurant)//(this->whereAmI == RESTAURANT)
+	{
+		this->window->draw(this->restaurantBG);
+		this->window->draw(this->oikawa);
+		this->player->render(*this->window);
+	}
+
 }
 
 void MainPage::renderDialog()
@@ -352,10 +488,6 @@ void MainPage::renderDialog()
 	this->text->render(*this->window);
 }
 
-void MainPage::renderNewBG(short whereAmI)
-{
-	this->updateNewBG(this->whereAmI);
-}
 
 
 

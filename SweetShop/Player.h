@@ -10,6 +10,7 @@
 using namespace sf;
 enum playerWordForMovement { STAY, MOVING_LEFT, MOVING_RIGHT};
 
+
 class Player
 {
 private:
@@ -26,9 +27,9 @@ private:
 	IntRect currentFram; // cut fram
 	
 	//short place;
-	short testWhere;
-	short test = 0;
-	void initPlayer();
+	int pinPlace = 0;
+	//short test = 0;
+	void initPlayer(int pinPlace);
 	void initAnimation();
 	void initCamera();
 
@@ -41,12 +42,11 @@ public:
 	void updateMovedPosition();
 	void updateAnimation();
 	void updateCamera();
-	void updatePosition(short where);
+	//void updatePosition(short where);
 
 	void render(RenderTarget&target);
 
 	Sprite getPlayer();
-	View getView();
 	void updatePosition(int where);
 
 	

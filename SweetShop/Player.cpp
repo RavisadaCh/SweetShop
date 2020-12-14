@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::initPlayer()
+void Player::initPlayer(int pinPlace)
 {
 	if (this->playerTexture.loadFromFile("Texture/animation walk and stand fix1.png"))
 	{
@@ -8,7 +8,10 @@ void Player::initPlayer()
 	}
 	this->player.setTexture(this->playerTexture);
 	this->player.setOrigin(90.f, 0.f);
-	this->player.setPosition(Vector2f(684.f, 384.f));
+	
+
+	
+	
 }
 
 void Player::initAnimation()
@@ -20,7 +23,6 @@ void Player::initAnimation()
 	this->currentFram.height = 360.f;
 	this->currentFram.width = 180.f;
 	this->playerTimer.restart();
-	//this->player.setTextureRect(IntRect(this->currentFram));
 }
 
 void Player::initCamera()
@@ -31,7 +33,7 @@ void Player::initCamera()
 
 Player::Player()
 {
-	this->initPlayer();
+	this->initPlayer(pinPlace);
 	this->initAnimation();
 	this->initCamera();
 	
@@ -60,14 +62,24 @@ void Player::updatePlace()
 
 void Player::updateMovedPosition()
 {
-	//this->wordForMovement = STAY;
-
 	if (Keyboard::isKeyPressed(Keyboard::A) && this->player.getPosition().x - 90 > 0)
 	{
 		this->wordForMovement = MOVING_LEFT;
 		this->player.move(-6.f, 0.f);
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 8196)
+	else if (this->pinPlace == 1 || this->pinPlace == 2 || this->pinPlace == 3 || this->pinPlace == 4 || this->pinPlace == 5 || this->pinPlace == 6)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 1366)
+		{
+			this->wordForMovement = MOVING_RIGHT;
+			this->player.move(6.f, 0.f);
+		}
+		else
+		{
+			this->wordForMovement = STAY;
+		}
+	}
+	else if (this->pinPlace == 0 && Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 8196)
 	{
 		this->wordForMovement = MOVING_RIGHT;
 		this->player.move(6.f, 0.f);
@@ -145,26 +157,58 @@ void Player::updateCamera()
 	//this->updatePosition(this->place);
 	/*this->Valuetest = this->testnum;
 	printf("%d\n", Valuetest);*/
-	this->test = this->testWhere;
-	this->cam.setCenter(this->player.getPosition());
+	//this->test = this->testWhere;
 
-	if (this->cam.getCenter().x - 683 <= 0)
-	{
-		this->cam.setCenter(683, 384);
-	}
+	printf("%d\n", pinPlace);
 
-	if (this->cam.getCenter().x + 683 >= 8196)
+	if (this->pinPlace == 1)			//<---chemist
 	{
-		this->cam.setCenter(7513, 384);
+		this->cam.setCenter(683, 1152);
 	}
+	else if (this->pinPlace == 2)		//<---sweetshop
+	{
+		this->cam.setCenter(683, 1920);
+	}
+	else if (this->pinPlace == 3)		//<---greengrocer
+	{
+		this->cam.setCenter(683, 2688);
+	}
+	else if (this->pinPlace == 4)		//<---florist
+	{
+		this->cam.setCenter(683, 3456);
+	}
+	else if (this->pinPlace == 5)		//<---cafe
+	{
+		this->cam.setCenter(683, 4224);
+	}
+	else if (this->pinPlace == 6)		//<---restaurant
+	{
+		this->cam.setCenter(683, 4992);
+	}
+	else if(this->pinPlace == 0)		//<---outside
+	{
+		this->cam.setCenter(this->player.getPosition());
+
+		if (this->cam.getCenter().x - 683 <= 0)
+		{
+			this->cam.setCenter(683, 384);
+		}
+
+		if (this->cam.getCenter().x + 683 >= 8196)
+		{
+			this->cam.setCenter(7513, 384);
+		}
+	}
+	
 }
 
 
 
 void Player::render(RenderTarget& target)
 {
-	target.draw(this->player);
+	
 	target.setView(this->cam);
+	target.draw(this->player);
 }
 
 Sprite Player::getPlayer()
@@ -172,16 +216,42 @@ Sprite Player::getPlayer()
 	return this->player;
 }
 
-void Player::updatePosition(short where)
+void Player::updatePosition(int where)
 {
-	this->testWhere = where;
+	this->pinPlace = where;
 	//this->place = where;
+	if (pinPlace == 0)
+	{
+		this->player.setPosition(Vector2f(684.f, 384.f));
+	}
+	if (pinPlace == 1)
+	{
+		this->player.setPosition(Vector2f(684.f, 1152.f));
+	}
+	if (pinPlace == 2)
+	{
+		this->player.setPosition(Vector2f(684.f, 1920.f));
+	}
+	if (pinPlace == 3)
+	{
+		this->player.setPosition(Vector2f(684.f, 2688.f));
+	}
+	if (pinPlace == 4)
+	{
+		this->player.setPosition(Vector2f(684.f, 3456.f));
+	}
+	if (pinPlace == 5)
+	{
+		this->player.setPosition(Vector2f(684.f, 4224.f));
+	}
+	if (pinPlace == 6)
+	{
+		this->player.setPosition(Vector2f(684.f, 4992.f));
+	}
+	
+	
 }
 
-//View Player::getView()
-//{
-//	//return this->cam;
-//}
 
 
 
