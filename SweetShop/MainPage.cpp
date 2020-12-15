@@ -125,7 +125,10 @@ void MainPage::initInsideFlorist()
 
 	this->suga.loadFromFile("Texture/sugawara.png");
 	this->sugawara.setTexture(this->suga);
-	this->sugawara.setPosition(Vector2f(254.f, 3456.f));
+	this->sugawara.setPosition(Vector2f(254.f, 3256.f));
+	this->sugawaraArea.setSize(Vector2f(368, 455));
+	this->sugawaraArea.setPosition(154, 3256);
+	this->sugawaraArea.setFillColor(Color::Blue);
 }
 
 void MainPage::initInsideCafe()
@@ -495,6 +498,10 @@ void MainPage::updateCharacter()
 	{
 		this->situation = 2;
 	}
+	else if (this->sugawaraArea.getGlobalBounds().intersects(this->player->getPlayer().getGlobalBounds()))
+	{
+		this->situation = 3;
+	}
 	 
 }
 
@@ -688,7 +695,16 @@ void MainPage::updateDialog()
 		}
 	}
 	
+	int k = 0;
 
+	if (Keyboard::isKeyPressed(Keyboard::Space) && this->testTime > 1 && this->situation == 3)
+	{
+		k++;
+		if (k == 1)
+		{
+			
+		}
+	}
 
 
 	
@@ -794,6 +810,7 @@ void MainPage::renderBG()
 	{
 		this->window->draw(this->floristBG);
 		this->window->draw(this->sugawara);
+		this->window->draw(this->sugawaraArea);
 		this->player->render(*this->window);
 	}
 	if (this->insideCafe)//(this->whereAmI == CAFE)
