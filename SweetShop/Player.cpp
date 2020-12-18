@@ -1,10 +1,10 @@
 #include "Player.h"
 
-void Player::initPlayer(int pinPlace)
+void Player::initPlayer()
 {
 	if (this->playerTexture.loadFromFile("Texture/animation walk and stand fix1.png"))
 	{
-		printf("âËÅ´¢Öé¹");
+		//printf("âËÅ´¢Öé¹");
 	}
 	this->player.setTexture(this->playerTexture);
 	this->player.setOrigin(90.f, 0.f);
@@ -29,7 +29,7 @@ void Player::initCamera()
 
 Player::Player()
 {
-	this->initPlayer(pinPlace);
+	this->initPlayer();
 	this->initAnimation();
 	this->initCamera();
 }

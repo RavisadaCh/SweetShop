@@ -572,7 +572,7 @@ void MainPage::updateDoors()
 		if (this->insideSweetshop)
 		{	
 			this->whereAmI = SWEETSHOP;
-			std::cout << "came in sweetShop" << std::endl;
+			//std::cout << "came in sweetShop" << std::endl;
 			
 			this->exchangeShortToInt(SWEETSHOP);
 		
@@ -588,7 +588,7 @@ void MainPage::updateDoors()
 		this->insideChemist = true;
 		if (this->insideChemist)
 		{
-			std::cout << "came in chemist" << std::endl;
+			//std::cout << "came in chemist" << std::endl;
 			//this->whereAmI = CHEMIST;
 
 			this->exchangeShortToInt(CHEMIST);
@@ -604,7 +604,7 @@ void MainPage::updateDoors()
 		this->insideGreengrocer = true;
 		if (this->insideGreengrocer)
 		{
-			std::cout << "came in greengrocer" << std::endl;
+			//std::cout << "came in greengrocer" << std::endl;
 			this->whereAmI = GREENGROCER;
 
 			this->exchangeShortToInt(GREENGROCER);
@@ -619,7 +619,7 @@ void MainPage::updateDoors()
 		this->insideFlorist = true;
 		if (this->insideFlorist)
 		{
-			std::cout << "came in florist" << std::endl;
+			//std::cout << "came in florist" << std::endl;
 			this->whereAmI = FLORIST;
 
 			this->exchangeShortToInt(FLORIST);
@@ -634,7 +634,7 @@ void MainPage::updateDoors()
 		if (this->insideCafe)
 		{
 			this->outside = false;
-			std::cout << "came in cafe" << std::endl;
+			//std::cout << "came in cafe" << std::endl;
 			this->whereAmI = CAFE;
 
 			this->exchangeShortToInt(CAFE);
@@ -649,7 +649,7 @@ void MainPage::updateDoors()
 		if (this->insideRestaurant)
 		{
 			this->outside = false;
-			std::cout << "came in restaurant" << std::endl;
+			//std::cout << "came in restaurant" << std::endl;
 			this->whereAmI = RESTAURANT;
 
 			this->exchangeShortToInt(RESTAURANT);
@@ -739,7 +739,7 @@ void MainPage::updateCharacter()
 void MainPage::updateDialog()
 {
 	this->testTime = this->clock.getElapsedTime().asSeconds();
-	printf("%f\n", testTime);
+	//printf("%f\n", testTime);
 
 	/*if (Keyboard::isKeyPressed(Keyboard::Space) && testTime > 1 && situation == 0)
 	{

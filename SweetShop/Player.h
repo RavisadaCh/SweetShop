@@ -29,7 +29,7 @@ private:
 	//short place;
 	int pinPlace = 0;
 	//short test = 0;
-	void initPlayer(int pinPlace);
+	void initPlayer();
 	void initAnimation();
 	void initCamera();
 
