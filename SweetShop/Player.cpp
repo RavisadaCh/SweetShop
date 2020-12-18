@@ -8,10 +8,6 @@ void Player::initPlayer(int pinPlace)
 	}
 	this->player.setTexture(this->playerTexture);
 	this->player.setOrigin(90.f, 0.f);
-	
-
-	
-	
 }
 
 void Player::initAnimation()
@@ -36,8 +32,6 @@ Player::Player()
 	this->initPlayer(pinPlace);
 	this->initAnimation();
 	this->initCamera();
-	
-
 }
 
 Player::~Player()
@@ -67,7 +61,7 @@ void Player::updateMovedPosition()
 		this->wordForMovement = MOVING_LEFT;
 		this->player.move(-6.f, 0.f);
 	}
-	else if (this->pinPlace == 1 || this->pinPlace == 2 || this->pinPlace == 3 || this->pinPlace == 4 || this->pinPlace == 5 || this->pinPlace == 6)
+	else if (this->pinPlace == 1 || this->pinPlace == 2 || this->pinPlace == 3 || this->pinPlace == 4 || this->pinPlace == 5 || this->pinPlace == 6 || this->pinPlace == 7)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 1366)
 		{
@@ -78,6 +72,11 @@ void Player::updateMovedPosition()
 		{
 			this->wordForMovement = STAY;
 		}
+	}
+	else if (this->pinPlace == 8 && Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 2732)
+	{
+		this->wordForMovement = MOVING_RIGHT;
+		this->player.move(6.f, 0.f);
 	}
 	else if (this->pinPlace == 0 && Keyboard::isKeyPressed(Keyboard::D) && this->player.getPosition().x + 90 < 8196)
 	{
@@ -154,15 +153,6 @@ void Player::updateAnimation()
 
 void Player::updateCamera()
 {
-	//this->updatePosition(this->place);
-	/*this->Valuetest = this->testnum;
-	printf("%d\n", Valuetest);*/
-	//this->test = this->testWhere;
-
-	//printf("%d\n", pinPlace);
-
-
-
 	if (this->pinPlace == 1)			//<---chemist
 	{
 		this->cam.setCenter(683, 1152);
@@ -186,6 +176,23 @@ void Player::updateCamera()
 	else if (this->pinPlace == 6)		//<---restaurant
 	{
 		this->cam.setCenter(683, 4992);
+	}
+	else if (this->pinPlace == 7)
+	{
+		this->cam.setCenter(683, 5760);
+	}
+	else if (this->pinPlace == 8)
+	{
+		this->cam.setCenter(this->player.getPosition());
+
+		if (this->cam.getCenter().x - 683 <= 0)
+		{
+			this->cam.setCenter(683, 6528);
+		}
+		if (this->cam.getCenter().x + 683 >= 2732)
+		{
+			this->cam.setCenter(2049, 6528);
+		}
 	}
 	else if(this->pinPlace == 0)		//<---outside
 	{
@@ -250,6 +257,14 @@ void Player::updatePosition(int where)
 	if (pinPlace == 6)
 	{
 		this->player.setPosition(Vector2f(684.f, 4992.f));
+	}
+	if (pinPlace == 7)
+	{
+		this->player.setPosition(Vector2f(684.f, 5760.f));
+	}
+	if (pinPlace == 8)
+	{
+		this->player.setPosition(Vector2f(684.f, 6528.f));
 	}
 	
 	

@@ -6,10 +6,9 @@
 #include<SFML/Network.hpp>
 
 #include"Player.h"
-#include"Dialog.h"
 #include<iostream>
 using namespace sf;
-enum place { OUTSIDE, SWEETSHOP, GREENGROCER, CHEMIST, FLORIST, CAFE, RESTAURANT };
+enum place { OUTSIDE, SWEETSHOP, GREENGROCER, CHEMIST, FLORIST, CAFE, RESTAURANT, HOWTO, CREDIT };
 
 class MainPage
 {
@@ -38,11 +37,17 @@ private: //ใช้ได้แค่ในคลาส
 	int situation;
 	int i = 0;
 	int j = 0;
+	int k = 0;
+	int l = 0;
 
 	bool X = false;
 	bool C = false;
+	bool opening = false;
 	bool firstTalkWithHina = false;
 	bool secondTalkWithKage = false;
+	bool thirdTalkWithSuga = false;
+	bool forthTalkWithHina = false;
+	bool fifthTalkWithKenma = false;
 
 	bool outside = true;
 	bool insideChemist = false;
@@ -51,6 +56,8 @@ private: //ใช้ได้แค่ในคลาส
 	bool insideFlorist = false;
 	bool insideCafe = false;
 	bool insideRestaurant = false;
+	bool atHowToPlayPage = false;
+	bool atCreditPage = false;
 
 	RectangleShape chemistDoor;
 	RectangleShape sweetShopDoor;
@@ -72,8 +79,19 @@ private: //ใช้ได้แค่ในคลาส
 	Sprite cafeBG;
 	Texture restaurant;
 	Sprite restaurantBG;
+	Texture howTo;
+	Sprite howToPlay;
+	Texture howtoBox;
+	Sprite howToButton;
+	Texture end;
+	Sprite credit;
+	Texture creditBox;
+	Sprite creditButton;
 
-	RectangleShape kitaSan;
+
+	Texture kita;
+	Sprite kitaSan;
+	RectangleShape kitaSanArea;
 	Texture hina;
 	Sprite hinata;
 	RectangleShape hinataArea;
@@ -94,7 +112,6 @@ private: //ใช้ได้แค่ในคลาส
 	Text text;
 	Text text2;
 	Font font;
-	//String* op[20];
 	Text empty;
 	Text op1;
 	Text op2;
@@ -106,6 +123,7 @@ private: //ใช้ได้แค่ในคลาส
 	Text hina4;
 	Text hina5;
 	Text hina6;
+
 	Text kage1;
 	Text kage2;
 	Text kage3;
@@ -121,6 +139,43 @@ private: //ใช้ได้แค่ในคลาส
 	Text kage10;
 	Text kage11;
 
+	Text player1;
+	Text player2;
+	Text player2_1;
+	Text player2_2;
+	Text suga1;
+	Text suga2;
+	Text suga3;
+	Text suga4;
+	Text suga5_1;
+	Text suga5_2;
+	Text suga5_3;
+	Text suga5_4;
+	Text suga6;
+
+	Text hina7;
+	Text hina8;
+	Text hina9;
+	Text hina10;
+	Text hina11;
+	Text hina12;
+
+	Text player3;
+	Text player4;
+	Text kenma1;
+	Text kenma2;
+	Text player4_1;
+	Text player4_2;
+	Text kenma3_1;
+	Text kenma3_2;
+	Text kenma3_3;
+	Text kenma3_4;
+	Text kenma3_5;
+	Text kenma3_6;
+	Text kenma4;
+	Text kenma5;
+
+
 
 	void initInsideChemist();
 	void initInsideSweetShop();
@@ -128,6 +183,8 @@ private: //ใช้ได้แค่ในคลาส
 	void initInsideFlorist();
 	void initInsideCafe();
 	void initInsideRestaurant();
+	void initHowToPlay();
+	void initCredit();
 
 	void initDialog();
 
